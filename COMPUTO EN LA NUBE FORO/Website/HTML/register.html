@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameStation UADEO Mx - Registro</title>
+  <link rel="stylesheet" href="/bootstrap/CSS/bootstrap.min.css">
+  <link rel="stylesheet" href="/CSS/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">GameStation UADEO Mx</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="register.html">Registro</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="login.html">Iniciar Sesión</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container mt-5">
+    <h2 class="text-center mb-4">Registro de Usuario</h2>
+    <form action="PHP/register.php" method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Nombre de Usuario:</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo Electrónico:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <div class="mb-3">
+        <label for="confirm_password" class="form-label">Confirmar Contraseña:</label>
+        <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+    </form>
+    
+    <!-- Mensaje de error si hay un fallo en el registro -->
+    <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+      <div class="alert alert-danger mt-3">Error en el registro. Inténtalo de nuevo.</div>
+    <?php endif; ?>
+  </section>
+
+  <footer class="bg-primary text-white text-center py-3 mt-5">
+    &copy; 2024 GameStation UADEO Mx. Todos los derechos reservados.
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Verificar que las contraseñas coincidan
+    document.querySelector('form').addEventListener('submit', function (e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('Las contraseñas no coinciden.');
+      }
+    });
+  </script>
+</body>
+</html>

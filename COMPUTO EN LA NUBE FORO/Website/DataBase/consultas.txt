@@ -1,0 +1,42 @@
+// Obtener la información de un perfil específico
+
+SELECT username, email, location, bio, profile_photo_url, joined_date
+FROM users
+WHERE user_id = 1;
+
+// Obtener las publicaciones de un usuario específico
+
+SELECT p.content, p.created_at
+FROM posts p
+JOIN users u ON p.user_id = u.user_id
+WHERE u.user_id = 1
+ORDER BY p.created_at DESC;
+
+// Obtener la lista de amigos de un usuario
+
+SELECT u.username, f.created_at
+FROM friends f
+JOIN users u ON f.friend_id = u.user_id
+WHERE f.user_id = 1 AND f.status = 'accepted';
+
+// Obtener las fotos de un usuario
+
+SELECT photo_url, created_at
+FROM photos
+WHERE user_id = 1;
+
+// Obtener los likes de un post
+
+SELECT COUNT(*) AS total_likes
+FROM likes
+WHERE post_id = 1;
+
+// Consultar las publicaciones favoritas de un usuario
+
+SELECT p.content, f.created_at
+FROM favorites f
+JOIN posts p ON f.post_id = p.post_id
+WHERE f.user_id = 1;
+
+INSERT INTO notifications (user_id, triggered_by_user_id, post_id, notification_type, message)
+VALUES (?, ?, ?, 'comment', 'Usuario X ha comentado tu publicación');

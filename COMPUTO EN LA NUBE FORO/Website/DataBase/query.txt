@@ -1,0 +1,64 @@
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,  -- La contraseña debe estar encriptada
+    joined_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    location VARCHAR(100),
+    bio TEXT,
+    profile_photo_url VARCHAR(255) -- Nueva columna para la URL de la foto de perfil
+);
+
+CREATE TABLE posts (
+    post_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE comments (
+    comment_id INT PRIMARY KEY AUTO_INCREMENT,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE likes (
+    like_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE
+);
+
+CREATE TABLE favorites (
+    favorite_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES posts(post_id) ON DELETE CASCADE
+);
+
+CREATE TABLE friends (
+    user_id INT NOT NULL,
+    friend_id INT NOT NULL,
+    status ENUM('pending', 'accepted', 'blocked') DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, friend_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE photos (
+    photo_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    photo_url VARCHAR(255) NOT NULL,  -- URL o ruta de la foto en el servidor
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);

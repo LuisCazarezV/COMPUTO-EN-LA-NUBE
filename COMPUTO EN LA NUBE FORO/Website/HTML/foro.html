@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foro - GameStation UADEO Mx</title>
+    <link rel="stylesheet" href="/bootstrap/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="/CSS/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">GameStation UADEO Mx</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="foro.html">Foro</a>
+                    </li>
+                </ul>
+                <a href="login.html" class="btn btn-outline-light">Iniciar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección del Foro -->
+    <section class="container mt-5">
+        <h2 class="text-center mb-4">Foro de Discusión</h2>
+
+        <!-- Verificar si el usuario ya ha creado un post -->
+        <?php
+        session_start();
+        require 'PHP/db.php'; // Incluir conexión a la base de datos
+
+        $user_id = $_SESSION['user_id']; // Obtener ID del usuario
+        $stmt = $conn->prepare("SELECT * FROM posts WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        $user_post = $stmt->fetch(PDO::FETCH_ASSOC);
+        ?>
+
+        <!-- Mostrar botón de "Crear Post" o "Editar Post" según si el usuario tiene un post -->
+        <div class="d-flex justify-content-between mb-4">
+            <?php if (!$user_post): ?>
+                <a href="create_post.html" class="btn btn-success">Crear Post</a>
+            <?php else: ?>
+                <a href="edit_post.php?post_id=<?php echo $user_post['post_id']; ?>" class="btn btn-warning">Editar Mi Post</a>
+            <?php endif; ?>
+        </div>
+
+        <!-- Lista de Posts -->
+        <div class="row">
+            <?php
+            $stmt = $conn->query("SELECT posts.post_id, posts.content, users.username, posts.created_at FROM posts JOIN users ON posts.user_id = users.user_id ORDER BY posts.created_at DESC");
+            $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if ($posts):
+                foreach ($posts as $post):
+            ?>
+            <div class="col-md-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo htmlspecialchars($post['username']); ?></h5>
+                        <p class="card-text"><?php echo htmlspecialchars($post['content']); ?></p>
+                        <small class="text-muted">Publicado el <?php echo date('d M Y, H:i', strtotime($post['created_at'])); ?></small>
+                    </div>
+                </div>
+            </div>
+            <?php endforeach; else: ?>
+                <p class="text-center">No hay posts disponibles.</p>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        &copy; 2024 GameStation UADEO Mx. Todos los derechos reservados.
+    </footer>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

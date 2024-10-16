@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nuevo Post - GameStation UADEO Mx</title>
+    <link rel="stylesheet" href="/bootstrap/CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="/CSS/style.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">GameStation UADEO Mx</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="foro.html">Foro</a>
+                    </li>
+                </ul>
+                <a href="login.html" class="btn btn-outline-light">Iniciar Sesión</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Crear Nuevo Post -->
+    <section class="container mt-5">
+        <h2>Crear Nuevo Post</h2>
+        <form action="PHP/create_post.php" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="post_content" class="form-label">Contenido del Post:</label>
+                <textarea class="form-control" id="post_content" name="post_content" rows="5" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="post_photo" class="form-label">Subir una imagen (opcional):</label>
+                <input type="file" class="form-control" id="post_photo" name="post_photo" accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-primary">Publicar</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-3 mt-5">
+        &copy; 2024 GameStation UADEO Mx. Todos los derechos reservados.
+    </footer>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

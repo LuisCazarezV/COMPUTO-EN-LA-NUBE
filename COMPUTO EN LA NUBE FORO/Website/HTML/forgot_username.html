@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recuperar Nombre de Usuario</title>
+  <!-- Cargar el archivo Bootstrap local -->
+  <link rel="stylesheet" href="/bootstrap/CSS/bootstrap.min.css">
+  <!-- Si tienes un archivo de estilos personalizados, lo puedes agregar -->
+  <link rel="stylesheet" href="/CSS/style.css">
+</head>
+<body>
+  <section class="container mt-5">
+    <h2 class="text-center mb-4">Recuperar Nombre de Usuario</h2>
+    <form action="PHP/recover_username.php" method="post">
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo Electrónico:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Enviar Nombre de Usuario</button>
+    </form>
+  </section>
+
+  <footer class="bg-primary text-white text-center py-3 mt-5">
+    &copy; 2024 GameStation UADEO Mx. Todos los derechos reservados.
+  </footer>
+
+  <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
